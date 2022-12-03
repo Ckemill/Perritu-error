@@ -16,10 +16,10 @@ module.exports = {
     ),
   async execute(client, interaction, prefix, GUILD_DATA) {
     let args = [interaction.options.getString("module")];
-    let opcion = "Comandos, Eventos y Handlers";
+    let opcion = "Commands, Events & Handlers";
     try {
       switch (args[0]?.toLowerCase()) {
-        case "comands":
+        case "commands":
         case "comandos":
           {
             opcion = "Commands";

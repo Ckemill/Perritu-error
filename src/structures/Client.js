@@ -98,25 +98,25 @@ module.exports = class extends Client {
 
     this.slashArray = [];
 
-    const RUTA_ARCHIVOS = await this.utils.loadFiles("/src/slashCommands");
+    const FilesPath = await this.utils.loadFiles("/src/slashCommands");
 
-    if (RUTA_ARCHIVOS.length) {
-      RUTA_ARCHIVOS.forEach((rutaArchivo) => {
+    if (FilesPath.length) {
+      FilesPath.forEach((FilePath) => {
         try {
-          const COMANDO = require(rutaArchivo);
-          const NOMBRE_COMANDO = rutaArchivo
+          const Command = require(FilePath);
+          const CommandName = FilePath
             .split("\\")
             .pop()
             .split("/")
             .pop()
             .split(".")[0];
-          COMANDO.CMD.name = NOMBRE_COMANDO;
+          Command.CMD.name = CommandName;
 
-          if (NOMBRE_COMANDO) this.slashCommands.set(NOMBRE_COMANDO, COMANDO);
+          if (CommandName) this.slashCommands.set(CommandName, Command);
 
-          this.slashArray.push(COMANDO.CMD.toJSON());
+          this.slashArray.push(Command.CMD.toJSON());
         } catch (e) {
-          console.log(`(/) ERROR WHILE LOADING FILE ${rutaArchivo}`.bgRed);
+          console.log(`(/) ERROR WHILE LOADING FILE ${FilePath}`.bgRed);
           console.log(e);
         }
       });
@@ -135,20 +135,20 @@ module.exports = class extends Client {
   async loadHandlers() {
     console.log(`(-) Loading handlers.`.yellow);
 
-    const RUTA_ARCHIVOS = await this.utils.loadFiles("/src/handlers");
+    const FilesPath = await this.utils.loadFiles("/src/handlers");
 
-    if (RUTA_ARCHIVOS.length) {
-      RUTA_ARCHIVOS.forEach((rutaArchivo) => {
+    if (FilesPath.length) {
+      FilesPath.forEach((FilePath) => {
         try {
-          require(rutaArchivo)(this);
+          require(FilePath)(this);
         } catch (e) {
-          console.log(`ERROR WHILE LOADING FILE ${rutaArchivo}`.bgRed);
+          console.log(`ERROR WHILE LOADING FILE ${FilePath}`.bgRed);
           console.log(e);
         }
       });
     }
 
-    console.log(`(-) ${RUTA_ARCHIVOS.length} Handlers loaded.`.green);
+    console.log(`(-) ${FilesPath.length} Handlers loaded.`.green);
   }
 
   async loadEvents() {

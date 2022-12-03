@@ -1,41 +1,41 @@
 module.exports = async (client, interaction) => {
   if (!interaction.guild || !interaction.channel) return;
 
-  const COMANDO = client.slashCommands.get(interaction?.commandName);
+  const Command = client.slashCommands.get(interaction?.commandName);
 
-  if (COMANDO) {
-    if (COMANDO.OWNER) {
+  if (Command) {
+    if (Command.OWNER) {
       if (!process.env.OWNER_IDS.split(" ").includes(interaction.author.id))
         return interaction.reply({
           content: `❌ **Only my owners can run this command**\n**My owners:** ${process.env.OWNER_IDS.split(
             " "
-          ).map((OWNER_ID) => `<@${OWNER_ID}>`)}`,
+          ).map((OWNER_IDS) => `<@${OWNER_IDS}>`)}`,
           ephemeral: true,
         });
     }
 
-    if (COMANDO.BOT_PERMISSIONS) {
+    if (Command.BOT_PERMISSIONS) {
       if (
-        !interaction.guild.members.me.permissions.has(COMANDO.BOT_PERMISSIONS)
+        !interaction.guild.members.me.permissions.has(Command.BOT_PERMISSIONS)
       )
         return interaction.reply({
-          content: `❌ **I need this/these permissions to run this command:**\n${COMANDO.BOT_PERMISSIONS.map(
-            (PERMISO) => `\`${PERMISO}\``
+          content: `❌ **I need this/these permissions to run this command:**\n${Command.BOT_PERMISSIONS.map(
+            (Permission) => `\`${Permission}\``
           ).join(", ")}`,
           ephemeral: true,
         });
     }
 
-    if (COMANDO.PERMISSIONS) {
-      if (!interaction.member.permissions.has(COMANDO.PERMISSIONS))
+    if (Command.PERMISSIONS) {
+      if (!interaction.member.permissions.has(Command.PERMISSIONS))
         return interaction.reply({
-          content: `❌ **You need this/these permissions to run this command:**\n${COMANDO.PERMISSIONS.map(
-            (PERMISO) => `\`${PERMISO}\``
+          content: `❌ **You need this/these permissions to run this command:**\n${Command.PERMISSIONS.map(
+            (Permission) => `\`${Permission}\``
           ).join(", ")}`,
           ephemeral: true,
         });
     }
 
-    COMANDO.execute(client, interaction, "/");
+    Command.execute(client, interaction, "/");
   }
 };

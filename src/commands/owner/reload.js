@@ -5,14 +5,14 @@ module.exports = {
   BOT_PERMISSIONS: ["EmbedLinks"],
   OWNER: true,
   async execute(client, message, args, prefix, GUILD_DATA) {
-    let opcion = "Comandos, Eventos y Handlers";
+    let opcion = "Commands, Events & Handlers";
 
     try {
       switch (args[0]?.toLowerCase()) {
-        case "comands":
+        case "commands":
         case "comandos":
           {
-            opcion = "Comandos";
+            opcion = "Commands";
             await client.loadCommands();
           }
           break;
@@ -20,7 +20,7 @@ module.exports = {
         case "slash":
         case "slashcommands":
           {
-            opcion = "Comandos Slash";
+            opcion = "SlashCommands";
             await client.loadSlashCommands();
           }
           break;
@@ -28,7 +28,7 @@ module.exports = {
         case "eventos":
         case "events":
           {
-            opcion = "Eventos";
+            opcion = "Events";
             await client.loadEvents();
           }
           break;
@@ -46,16 +46,12 @@ module.exports = {
       message.reply({
         embeds: [
           new EmbedBuilder()
-            .addFields([
-              { name: `✅ ${opcion} Recargados`, value: `> *Okay!*` },
-            ])
+            .addFields([{ name: `✅ ${opcion} reloaded`, value: `> *Okay!*` }])
             .setColor(process.env.COLOR),
         ],
       });
     } catch (e) {
-      message.reply(
-        `**Ha ocurrido un error a al recargar el bot!**\n*Mira la consola para más detalles.*`
-      );
+      message.reply(`**An error has occurred.**`);
       console.log(e);
       return;
     }

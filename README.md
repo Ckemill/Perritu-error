@@ -47,7 +47,7 @@ _⚠️ Never share the content of your `.env` file with no one._
 BOT_TOKEN = "Bot's token"
 PREFIX = "Desired Bot's prefix"
 STATUS = "Bot Status Text"
-STATUS_TYPE = "State Type"
+STATUS_TYPE = "State Type" #these can only be Playing, Streaming, Listening, Competing.
 COLOR = "the color of the embed (HEX)"
 OWNER_ID = "The bot owners ID separated with spaces"
 ```
@@ -72,10 +72,10 @@ Then, you will have to create the structure (object) of the command with the fol
 module.exports = {
     DESCRIPTION: "Serves to perform an announcement.", //command description
     ALIASES: ["ad", "advertisement"] //command name aliases
-    PERMISSIONS: ["Administrator", "KickMembers", "BanMembers"] //permissions the user will need to run the command
-    BOT_PERMISSIONS: ["Administrator", "KickMembers", "BanMembers"] //permissions that the bot will need to execute the command
+    PERMISSIONS: ["KickMembers", "BanMembers"] //permissions the user will need to run the command
+    BOT_PERMISSIONS: ["KickMembers", "BanMembers"] //permissions that the bot will need to execute the command
     OWNER: true, //If true, only the owners of the bot will be able to execute the command
-    execute(client, message, args, prefix, GUILD_DATA){
+    execute(client, message, args, prefix){
         //command execution
         return message.reply(`**This is an announcement!**`);
     }
@@ -83,6 +83,8 @@ module.exports = {
 ```
 
 ⌚ The command name will be equal to the file name.
+
+❗`Aliases`, both `Permissions` & `Owner` can be removed from the object if no use needed.
 
 To execute the command that we have created, it is as simple as executing in our bot `<Prefijo>announcement`.
 
@@ -106,8 +108,8 @@ module.exports = {
     CMD: new SlashCommandBuilder()
     .setDescription("Serves to perform an announcement."), //command description
     //you can find more methods in https://discordjs.guide/creating-your-bot/slash-commands.html
-    PERMISSIONS: ["Administrator", "KickMembers", "BanMembers"] //permissions the user will need to run the command
-    BOT_PERMISSIONS: ["Administrator", "KickMembers", "BanMembers"] //permissions that the bot will need to execute the command
+    PERMISSIONS: ["KickMembers", "BanMembers"] //permissions the user will need to run the command
+    BOT_PERMISSIONS: ["KickMembers", "BanMembers"] //permissions that the bot will need to execute the command
     OWNER: true, //If true, only the owners of the bot will be able to execute the command
     execute(client, interaction, prefix){
         //command execution
@@ -117,6 +119,8 @@ module.exports = {
 ```
 
 ⌚ The command name will be equal to the file name.
+
+❗Both `Permissions` & `Owner` can be removed from the object if no use needed.
 
 To execute the command that we have created, it is as simple as executing in our bot `/announcement`
 

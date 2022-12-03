@@ -9,45 +9,44 @@ module.exports = async (client, message) => {
     .split(/ +/);
   const CMD = ARGS?.shift()?.toLowerCase();
 
-  const COMANDO =
+  const Command =
     client.commands.get(CMD) ||
     client.commands.find((c) => c.ALIASES && c.ALIASES.includes(CMD));
 
-  if (COMANDO) {
+  if (Command) {
     if (!message.guild.members.me.permissions.has("SendMessages")) return;
 
-    if (COMANDO.OWNER) {
-      if (!process.env.OWNER_ID.split(" ").includes(message.author.id))
+    if (Command.OWNER) {
+      if (!process.env.OWNER_IDS.split(" ").includes(message.author.id))
         return message.reply(
-          `❌ **Only my owner can use this command!** ${process.env.OWNER_ID.split(
+          `❌ **Only my owners can use this command!** ${process.env.OWNER_IDS.split(
             " "
-          ).map((OWNER_ID) => `<@${OWNER_ID}>`)}`
+          ).map((OWNER_IDS) => `<@${OWNER_IDS}>`)}`
         );
     }
 
-    if (COMANDO.BOT_PERMISSIONS) {
-      if (!message.guild.members.me.permissions.has(COMANDO.BOT_PERMISSIONS))
+    if (Command.BOT_PERMISSIONS) {
+      if (!message.guild.members.me.permissions.has(Command.BOT_PERMISSIONS))
         return message.reply(
-          `❌ **I need these permissions to run this command:** ${COMANDO.BOT_PERMISSIONS.map(
-            (PERMISO) => `\`${PERMISO}\``
+          `❌ **I need these permissions to run this command:** ${Command.BOT_PERMISSIONS.map(
+            (Permission) => `\`${Permission}\``
           ).join(", ")}`
         );
     }
 
-    if (COMANDO.PERMISSIONS) {
-      if (!message.member.permissions.has(COMANDO.PERMISSIONS))
+    if (Command.PERMISSIONS) {
+      if (!message.member.permissions.has(Command.PERMISSIONS))
         return message.reply(
-          `❌ **You need these permissions to run this command:** ${COMANDO.PERMISSIONS.map(
-            (PERMISO) => `\`${PERMISO}\``
+          `❌ **You need these permissions to run this command:** ${Command.PERMISSIONS.map(
+            (Permission) => `\`${Permission}\``
           ).join(", ")}`
         );
     }
 
     try {
-      //ejecutar el comando
-      COMANDO.execute(client, message, ARGS, process.env.PREFIX);
+      Command.execute(client, message, ARGS, process.env.PREFIX);
     } catch (e) {
-      message.reply(`**An error has occurred \`${COMANDO.NAME}\`**`);
+      message.reply(`**An error has occurred \`${Command.NAME}\`**`);
       console.log(e);
       return;
     }
