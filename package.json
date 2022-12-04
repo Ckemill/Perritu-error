@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
   "name": "perritu",
   "version": "1.0.0",
   "description": "Discord interactive bot",
@@ -13,5 +17,11 @@
     "glob": "^8.0.3",
     "promisify": "^0.0.3",
     "util": "^0.12.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.2.3",
+    "jest": "^29.3.1",
+    "supertest": "^6.3.2",
+    "ts-jest": "^29.0.3"
   }
 }
